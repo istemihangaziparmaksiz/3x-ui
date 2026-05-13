@@ -11,6 +11,7 @@ import {
   CloseOutlined,
   MenuOutlined,
   ApiOutlined,
+  HddOutlined,
 } from '@ant-design/icons-vue';
 
 import { theme, currentTheme, toggleTheme, toggleUltra, pauseAnimationsUntilLeave } from '@/composables/useTheme.js';
@@ -35,6 +36,7 @@ const iconByName = {
   cluster: ClusterOutlined,
   logout: LogoutOutlined,
   apidocs: ApiOutlined,
+  darkssh: HddOutlined,
 };
 
 const prefix = props.basePath?.startsWith('/') ? props.basePath : `/${props.basePath || ''}`;
@@ -45,6 +47,7 @@ const tabs = computed(() => [
   { key: `${prefix}panel/nodes`, icon: 'cluster', title: t('menu.nodes') },
   { key: `${prefix}panel/settings`, icon: 'setting', title: t('menu.settings') },
   { key: `${prefix}panel/xray`, icon: 'tool', title: t('menu.xray') },
+  { key: `${prefix}panel/darkssh`, icon: 'darkssh', title: t('menu.darkssh') },
   { key: `${prefix}panel/api-docs`, icon: 'apidocs', title: t('menu.apiDocs') },
   { key: 'logout', icon: 'logout', title: t('logout') },
 ]);

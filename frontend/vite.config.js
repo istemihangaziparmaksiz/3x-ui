@@ -28,6 +28,8 @@ const BASE_MIGRATED_ROUTES = {
   'panel/nodes/': '/nodes.html',
   'panel/api-docs': '/api-docs.html',
   'panel/api-docs/': '/api-docs.html',
+  'panel/darkssh': '/darkssh.html',
+  'panel/darkssh/': '/darkssh.html',
 };
 
 let cachedBasePath = '/';
@@ -153,6 +155,7 @@ export default defineConfig({
         xray: path.resolve(__dirname, 'xray.html'),
         nodes: path.resolve(__dirname, 'nodes.html'),
         apiDocs: path.resolve(__dirname, 'api-docs.html'),
+        darkssh: path.resolve(__dirname, 'darkssh.html'),
         subpage: path.resolve(__dirname, 'subpage.html'),
       },
       output: {

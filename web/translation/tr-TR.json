@@ -97,6 +97,7 @@
     "nodes": "Düğümler",
     "settings": "Panel Ayarları",
     "xray": "Xray Yapılandırmaları",
+    "darkssh": "DarkSSH araçları",
     "apiDocs": "API Belgeleri",
     "logout": "Çıkış Yap",
     "link": "Yönet"
@@ -450,6 +451,31 @@
         "test": "Bağlantıyı test et",
         "fillRequired": "Ad, adres, port ve API token gereklidir",
         "probeFailed": "Test başarısız"
+      }
+    },
+    "darkssh": {
+      "title": "DarkSSH araçları",
+      "intro": "İsteğe bağlı sunucu yardımcıları (badvpn UDP geçidi, stunnel). Betikler panel ile aynı makinede çalışır; paket kurulumu için root gerekir. Yalnızca kontrol ettiğiniz sunucularda kullanın.",
+      "overview": "Genel bakış",
+      "refresh": "Yenile",
+      "hostname": "Ana makine adı",
+      "kernel": "Çekirdek",
+      "os": "İşletim sistemi",
+      "badvpnUdpgw": "badvpn-udpgw",
+      "stunnel": "stunnel",
+      "scriptsAllowed": "Bu işletim sisteminde betiklere izin",
+      "yes": "Evet",
+      "no": "Hayır",
+      "badvpnCard": "BadVPN (udpgw)",
+      "badvpnDesc": "Mevcut olduğunda APT üzerinden badvpn paketini kurar (Debian/Ubuntu). udpgw'yi hangi portlarda çalıştıracağınızı ayrıca systemd veya komut satırı ile yapılandırmanız gerekir.",
+      "stunnelCard": "Stunnel",
+      "stunnelDesc": "APT ile stunnel4 kurar. TLS sertifikaları ve servis bazlı yapılandırma burada oluşturulmaz.",
+      "runInstall": "Kurulum yardımcısını çalıştır",
+      "lastOutput": "Son komut çıktısı",
+      "scriptFinished": "Betik tamamlandı",
+      "scriptFinishedWithErrors": "Betik hatalarla tamamlandı — ayrıntılar aşağıda",
+      "toasts": {
+        "status": "Sunucu durumu okunamadı"
       }
     },
     "settings": {

@@ -37,6 +37,7 @@ func (a *XUIController) initRouter(g *gin.RouterGroup) {
 	g.GET("/settings", a.settings)
 	g.GET("/xray", a.xraySettings)
 	g.GET("/api-docs", a.apiDocs)
+	g.GET("/darkssh", a.darkssh)
 
 	// SPA pages built by Vite don't have a server-rendered <meta name="csrf-token">,
 	// so they fetch the session token via this endpoint at startup and replay it
@@ -45,6 +46,7 @@ func (a *XUIController) initRouter(g *gin.RouterGroup) {
 
 	a.settingController = NewSettingController(g)
 	a.xraySettingController = NewXraySettingController(g)
+	NewDarkSSHController(g)
 }
 
 // All four panel pages now serve the Vue 3 builds from web/dist/
@@ -80,6 +82,11 @@ func (a *XUIController) xraySettings(c *gin.Context) {
 // apiDocs renders the in-panel API documentation page.
 func (a *XUIController) apiDocs(c *gin.Context) {
 	serveDistPage(c, "api-docs.html")
+}
+
+// darkssh renders the DarkSSH helper tools page.
+func (a *XUIController) darkssh(c *gin.Context) {
+	serveDistPage(c, "darkssh.html")
 }
 
 // csrfToken returns the session CSRF token to authenticated SPA clients.

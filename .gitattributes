@@ -1,0 +1,2 @@
+# Shell scripts must stay LF for Linux targets (avoid CRLF breaking bash).
+web/service/darkssh_scripts/*.sh text eol=lf
