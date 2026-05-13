@@ -21,8 +21,16 @@ const darksshScriptDir = "darkssh_scripts"
 type DarkSSHService struct{}
 
 var darksshAllowed = map[string]string{
-	"badvpn-install": "badvpn-install.sh",
-	"stunnel-install": "stunnel-install.sh",
+	"badvpn-install":         "badvpn-install.sh",
+	"stunnel-install":        "stunnel-install.sh",
+	"ssh-users-list":         "ssh-users-list.sh",
+	"ssh-user-add":           "ssh-user-add.sh",
+	"ssh-user-del":           "ssh-user-del.sh",
+	"conn-ipforward-on":      "conn-ipforward-on.sh",
+	"conn-ipforward-off":     "conn-ipforward-off.sh",
+	"badvpn-systemd-install": "badvpn-systemd-install.sh",
+	"systemd-daemon-reload":  "systemd-daemon-reload.sh",
+	"stunnel-sample-conf":    "stunnel-sample-conf.sh",
 }
 
 // DarkSSHStatus is returned by the panel API for the DarkSSH overview.
@@ -32,6 +40,7 @@ type DarkSSHStatus struct {
 	OS             string `json:"os"`
 	BadvpnUdpgw    bool   `json:"badvpnUdpgw"`
 	Stunnel        bool   `json:"stunnel"`
+	IPv4Forward    bool   `json:"ipv4Forward"`
 	ScriptsAllowed bool   `json:"scriptsAllowed"`
 }
 
@@ -56,12 +65,18 @@ func (DarkSSHService) GetStatus() (*DarkSSHStatus, error) {
 	} else if _, err := exec.LookPath("stunnel"); err == nil {
 		st.Stunnel = true
 	}
+	if runtime.GOOS == "linux" {
+		if b, err := os.ReadFile("/proc/sys/net/ipv4/ip_forward"); err == nil {
+			st.IPv4Forward = strings.TrimSpace(string(b)) == "1"
+		}
+	}
 	return st, nil
 }
 
 // RunWhitelistedScript writes an embedded script to a temp file and executes it with bash.
-// name must be a key in darksshAllowed. Only Linux is supported.
-func (DarkSSHService) RunWhitelistedScript(ctx context.Context, name string) (string, error) {
+// name must be a key in darksshAllowed. Only Linux is supported. extraEnv entries are appended
+// to the process environment (e.g. DARKSSH_SUBUSER=...).
+func (DarkSSHService) RunWhitelistedScript(ctx context.Context, name string, extraEnv []string) (string, error) {
 	if runtime.GOOS != "linux" {
 		return "", fmt.Errorf("darkssh scripts are only supported on Linux hosts")
 	}
@@ -100,6 +115,7 @@ func (DarkSSHService) RunWhitelistedScript(ctx context.Context, name string) (st
 	}
 
 	cmd := exec.CommandContext(ctx, "/bin/bash", tmpPath)
+	cmd.Env = append(append([]string{}, os.Environ()...), extraEnv...)
 	var buf bytes.Buffer
 	cmd.Stdout = &buf
 	cmd.Stderr = &buf
